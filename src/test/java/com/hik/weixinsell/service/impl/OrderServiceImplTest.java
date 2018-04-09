@@ -24,6 +24,20 @@ public class OrderServiceImplTest {
 
     private final String OPENID="110110";
 
+    private final String ORDERID="1523254890442755433";
+
+    @Test
+    public void findListTest(){
+
+    }
+    @Test
+    public void findOnetest(){
+
+
+        OrderDTO orderDTO= orderService.findOne(ORDERID);
+        System.out.println(orderDTO);
+    }
+
     @Test
     public void creat() {
         OrderDTO orderDTO=new OrderDTO();

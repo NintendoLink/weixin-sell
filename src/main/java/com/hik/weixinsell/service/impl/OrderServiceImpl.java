@@ -4,6 +4,7 @@ import com.hik.weixinsell.DTO.CartDTO;
 import com.hik.weixinsell.DTO.OrderDTO;
 import com.hik.weixinsell.Repository.OrderDetailRepository;
 import com.hik.weixinsell.Repository.OrderMasterRepository;
+import com.hik.weixinsell.converter.OrderMaster2OrderDTOConverter;
 import com.hik.weixinsell.dataobject.OrderDetail;
 import com.hik.weixinsell.dataobject.OrderMaster;
 import com.hik.weixinsell.dataobject.ProductInfo;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,14 +93,36 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /**
+     * 查询单个订单
+     * @param orderId
+     * @return
+     */
     @Override
     public OrderDTO findOne(String orderId) {
-        return null;
+        OrderMaster orderMaster=orderMasterRepository.findOne(orderId);
+        if (orderMaster==null){
+            throw new SellException(ResultEnum.ORDER_NO_EXIST);
+        }
+        //查询订单详情
+        List<OrderDetail> orderDetailList=orderDetailRepository.findByOrderId(orderId);
+        if(orderDetailList==null){
+            throw new SellException(ResultEnum.ORDER_NO_EXIST);
+        }
+        OrderDTO orderDTO=new OrderDTO();
+        BeanUtils.copyProperties(orderMaster,orderDTO);
+        orderDTO.setOrderDetailList(orderDetailList);
+        return orderDTO;
     }
 
     @Override
     public Page<OrderDTO> findList(String buyerOpenid, Pageable pageable) {
-        return null;
+//        对象需要转换
+        Page<OrderMaster>orderMasterPage=orderMasterRepository.findByBuyerOpenid(buyerOpenid,pageable);
+        List<OrderDTO> orderDTOList= OrderMaster2OrderDTOConverter.converter(orderMasterPage.getContent());
+        Page<OrderDTO> orderDTOPage=new PageImpl<OrderDTO>(orderDTOList,pageable,orderMasterPage.getTotalElements());
+
+        return orderDTOPage;
     }
 
     @Override
