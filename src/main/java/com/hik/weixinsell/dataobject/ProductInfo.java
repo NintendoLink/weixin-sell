@@ -41,6 +41,15 @@ public class ProductInfo {
      */
     private Integer categoryType;
 
+
+
+
+    /**
+     * 存量
+     * @return
+     */
+    private Integer productStock;
+
     public String getProductId() {
         return productId;
     }
@@ -98,6 +107,14 @@ public class ProductInfo {
     }
 
     public ProductInfo() {
+    }
+
+    public Integer getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(Integer productStock) {
+        this.productStock = productStock;
     }
 
     @Override

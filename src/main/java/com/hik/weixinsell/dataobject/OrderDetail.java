@@ -4,7 +4,9 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,6 +39,7 @@ public class OrderDetail {
      * 商品小图
      */
     private String productIcon;
+
 
     public OrderDetail() {
     }

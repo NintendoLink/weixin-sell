@@ -1,22 +1,14 @@
-package com.hik.weixinsell.dataobject;
+package com.hik.weixinsell.DTO;
 
-import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
+import com.hik.weixinsell.dataobject.OrderDetail;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@DynamicUpdate
-@Data
-public class OrderMaster {
+public class OrderDTO {
 
-    /**
-     * 订单ID
-     */
-    @Id
+
     private String orderId;
     /**
      * 买家名字
@@ -41,11 +33,11 @@ public class OrderMaster {
     /**
      * 订单状态，默认为下单
      */
-    private Integer orderStatus=0;
+    private Integer orderStatus;
     /**
      * 支付状态,默认为未支付
      */
-    private Integer payStatus=0;
+    private Integer payStatus;
     /**
      * 创建时间
      */
@@ -57,22 +49,8 @@ public class OrderMaster {
 
     private Date updateTime;
 
-    /**
-     * 为了以后方便
-     */
-//    @Transient可以加注解，解决异常，这样不好，新建DTO
-//    private List<OrderDetail> orderDetailList;
+    private List<OrderDetail> orderDetailList;
 
-    public OrderMaster() {
-    }
-
-    public String getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
 
     public String getBuyerName() {
         return buyerName;
@@ -145,4 +123,21 @@ public class OrderMaster {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public List<OrderDetail> getOrderDetailList() {
+        return orderDetailList;
+    }
+
+    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+        this.orderDetailList = orderDetailList;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
 }
