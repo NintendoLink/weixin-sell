@@ -1,6 +1,8 @@
 package com.hik.weixinsell.DTO;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hik.weixinsell.dataobject.OrderDetail;
+import com.hik.weixinsell.utils.serializer.Date2LongSerializer;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -41,12 +43,13 @@ public class OrderDTO {
     /**
      * 创建时间
      */
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
 
     /**
      * 更新时间
      */
-
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date updateTime;
 
     private List<OrderDetail> orderDetailList;

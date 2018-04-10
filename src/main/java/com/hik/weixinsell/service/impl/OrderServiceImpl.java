@@ -81,8 +81,8 @@ public class OrderServiceImpl implements OrderService {
         }
 //        写入订单数据库
         OrderMaster orderMaster=new OrderMaster();
+        orderDTO.setOrderId(orderId);
         BeanUtils.copyProperties(orderDTO,orderMaster);
-        orderMaster.setOrderId(orderId);
 
         orderMaster.setOrderAmount(orderAmount);
         orderMaster.setOrderStatus(0);
@@ -94,8 +94,6 @@ public class OrderServiceImpl implements OrderService {
         productService.decreaseStock(cartDTOList);
 
         return orderDTO;
-
-
     }
 
     /**

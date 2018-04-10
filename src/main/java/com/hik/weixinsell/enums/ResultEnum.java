@@ -1,6 +1,8 @@
 package com.hik.weixinsell.enums;
 
 public enum ResultEnum {
+    PARAM_ERROR(1,"参数不正确"),
+
 
     PRODUCT_NOT_EXIST(10,"商品不存在"),
     PRODUCT_STOCK_ERROR(11,"库存不正确"),
@@ -9,6 +11,7 @@ public enum ResultEnum {
     ORDER_UPDATE_FAILED(14,"订单更新失败"),
     ORDER_DETAIL_EMPTY(15,"订单详情为空"),
     ORDER_PAY_STATUS_ERROR(16,"支付状态错误"),
+    CART_EMPTY(17,"购物车不能为空")
     ;
 
     private Integer code;
