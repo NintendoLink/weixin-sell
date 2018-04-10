@@ -1,7 +1,9 @@
 package com.hik.weixinsell.enums;
 
+import lombok.Data;
+
 public enum PayStatusEnum {
-    WAIT(0,"支付成功"),
+    WAIT(0,"待支付"),
     SUCCESS(1,"支付成功"),
 
     ;
@@ -14,4 +16,22 @@ public enum PayStatusEnum {
         this.message = message;
     }
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    PayStatusEnum() {
+    }
 }

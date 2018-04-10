@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -24,19 +26,7 @@ public class OrderServiceImplTest {
 
     private final String OPENID="110110";
 
-    private final String ORDERID="1523254890442755433";
-
-    @Test
-    public void findListTest(){
-
-    }
-    @Test
-    public void findOnetest(){
-
-
-        OrderDTO orderDTO= orderService.findOne(ORDERID);
-        System.out.println(orderDTO);
-    }
+    private final String ORDERID="1523325893774722651";
 
     @Test
     public void creat() {
@@ -73,21 +63,34 @@ public class OrderServiceImplTest {
 
     @Test
     public void findOne() {
+        OrderDTO orderDTO= orderService.findOne(ORDERID);
+        System.out.println(orderDTO);
     }
 
     @Test
     public void findList() {
+        PageRequest pageRequest=new PageRequest(0,2);
+        Page<OrderDTO>orderDTOPage=orderService.findList(OPENID,pageRequest);
+
+        System.out.println(orderDTOPage);
     }
 
     @Test
     public void cancel() {
+        OrderDTO orderDTO=orderService.findOne(ORDERID);
+        orderService.cancel(orderDTO);
+        System.out.println(orderDTO);
     }
 
     @Test
     public void finish() {
+        OrderDTO orderDTO= orderService.findOne(ORDERID);
+        orderService.finish(orderDTO);
     }
 
     @Test
     public void paid() {
+        OrderDTO orderDTO= orderService.findOne(ORDERID);
+        orderService.paid(orderDTO);
     }
 }
