@@ -1,13 +1,17 @@
 package com.hik.weixinsell.DTO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hik.weixinsell.dataobject.OrderDetail;
 import com.hik.weixinsell.utils.serializer.Date2LongSerializer;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
+@Data
+@JsonSerialize
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 
 

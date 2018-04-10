@@ -64,7 +64,7 @@ public class OrderServiceImplTest {
     @Test
     public void findOne() {
         OrderDTO orderDTO= orderService.findOne(ORDERID);
-        System.out.println(orderDTO);
+        System.out.println(orderDTO.getBuyerName());
     }
 
     @Test

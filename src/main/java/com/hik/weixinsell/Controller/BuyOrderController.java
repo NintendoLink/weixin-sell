@@ -6,6 +6,7 @@ import com.hik.weixinsell.converter.OrderForm2OrderDTOConverter;
 import com.hik.weixinsell.enums.ResultEnum;
 import com.hik.weixinsell.exception.SellException;
 import com.hik.weixinsell.form.OrderForm;
+import com.hik.weixinsell.service.impl.BuyerServiceImpl;
 import com.hik.weixinsell.service.impl.OrderServiceImpl;
 import com.hik.weixinsell.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,39 +34,71 @@ import java.util.Map;
  */
 public class BuyOrderController {
     @Autowired
+    private BuyerServiceImpl buyerService;
+
+    @Autowired
     private OrderServiceImpl orderService;
+
     //创建订单
     @PostMapping(value = "/create")
-    public ResultVO<Map<String,String>> creat(@Valid OrderForm orderForm, BindingResult bindingResult){
+    public ResultVO<Map<String, String>> creat(@Valid OrderForm orderForm, BindingResult bindingResult) {
 //        参数不正确
-        if(bindingResult.hasErrors()){
-            throw new SellException(ResultEnum.PARAM_ERROR.getCode(),bindingResult.getFieldError().getDefaultMessage());
+        if (bindingResult.hasErrors()) {
+            throw new SellException(ResultEnum.PARAM_ERROR.getCode(), bindingResult.getFieldError().getDefaultMessage());
         }
 
-        OrderDTO orderDTO= OrderForm2OrderDTOConverter.converter(orderForm);
-        if(CollectionUtils.isEmpty(orderDTO.getOrderDetailList())){
+        OrderDTO orderDTO = OrderForm2OrderDTOConverter.converter(orderForm);
+        if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
             throw new SellException(ResultEnum.CART_EMPTY);
         }
 
-        OrderDTO creatResult=orderService.creat(orderDTO);
-        Map<String,String> map=new HashMap<>();
-        map.put("orderId",creatResult.getOrderId());
+        OrderDTO creatResult = orderService.creat(orderDTO);
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", creatResult.getOrderId());
         return ResultVOUtil.success(map);
     }
+
     //订单列表
     @GetMapping(value = "/list")
     public ResultVO<List<OrderDTO>> list(@RequestParam("openid") String openid,
-                                         @RequestParam(value = "page",defaultValue = "0")   Integer page,
-                                         @RequestParam(value = "size",defaultValue = "10")   Integer size){
-        if(StringUtils.isEmpty(openid)){
+                                         @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                         @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        if (StringUtils.isEmpty(openid)) {
             throw new SellException(ResultEnum.PARAM_ERROR);
         }
 
-        PageRequest pageRequest=new PageRequest(page,size);
+        PageRequest pageRequest = new PageRequest(page, size);
 
-        Page<OrderDTO> orderDTOPage=orderService.findList(openid,pageRequest);
+        Page<OrderDTO> orderDTOPage = orderService.findList(openid, pageRequest);
 
         return ResultVOUtil.success(orderDTOPage);
+    }
+
+    @GetMapping(value = "/detail")
+    public ResultVO<OrderDTO> detail(@RequestParam("openid") String openId,
+                                     @RequestParam("orderid") String orderId) {
+        //TODO
+        //不安全的做法,改进
+//        OrderDTO orderDTO=orderService.findOne(orderId);
+//        return ResultVOUtil.success(orderDTO);
+
+        //改进版
+        OrderDTO orderDTO = buyerService.findOrderOne(openId, orderId);
+        return ResultVOUtil.success(orderDTO);
+    }
+
+    @GetMapping(value = "/cancel")
+    public ResultVO<OrderDTO> cancel(@RequestParam("openid") String openId,
+                                     @RequestParam("orderid") String orderId) {
+
+        //TODO
+        //不安全的做法，改进版,把所有的服务都调节的service层
+//        OrderDTO orderDTO=orderService.findOne(orderId);
+//        orderService.cancel(orderDTO);
+//
+//        return ResultVOUtil.success();
+        buyerService.cancelOne(openId, orderId);
+        return ResultVOUtil.success();
     }
 
 }
