@@ -2,6 +2,7 @@ package com.hik.weixinsell.service.impl;
 
 import com.hik.weixinsell.DTO.OrderDTO;
 import com.hik.weixinsell.dataobject.OrderDetail;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,5 +93,12 @@ public class OrderServiceImplTest {
     public void paid() {
         OrderDTO orderDTO= orderService.findOne(ORDERID);
         orderService.paid(orderDTO);
+    }
+    @Test
+    public void list(){
+        PageRequest pageRequest=new PageRequest(0,2);
+        Page<OrderDTO> orderDTOPage=orderService.findList(pageRequest);
+        System.out.println(orderDTOPage);
+        Assert.assertNotEquals(0,orderDTOPage.getTotalElements());
     }
 }

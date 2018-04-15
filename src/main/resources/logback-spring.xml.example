@@ -1,0 +1,64 @@
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<!--<configuration>-->
+    <!--&lt;!&ndash;配置控制台的输出&ndash;&gt;-->
+    <!--<appender name="consolelog" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+            <!--<pattern>-->
+                <!--%d - %msg%n-->
+            <!--</pattern>-->
+        <!--</layout>-->
+    <!--</appender>-->
+
+    <!--&lt;!&ndash;配置文件的输出&ndash;&gt;-->
+    <!--<appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--&lt;!&ndash;只记录info日志，info级别以上的日志不记录&ndash;&gt;-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">-->
+            <!--<level>ERRPR</level>-->
+            <!--<onMatch>DENY</onMatch>-->
+            <!--<onMisMatch>ACCEPT</onMisMatch>-->
+        <!--</filter>-->
+        <!--<encode>-->
+            <!--<pattern>-->
+                <!--%msg%n-->
+            <!--</pattern>-->
+            <!--&lt;!&ndash;滚动策略&ndash;&gt;-->
+            <!--&lt;!&ndash;每天一个日志&ndash;&gt;-->
+            <!--<rollongPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+                <!--&lt;!&ndash;路径&ndash;&gt;-->
+                <!--<fileNamePattern>-->
+                    <!--/var/log/tomcat/sell/info.%d.log-->
+                <!--</fileNamePattern>-->
+            <!--</rollongPolicy>-->
+        <!--</encode>-->
+    <!--</appender>-->
+
+
+    <!--<appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--&lt;!&ndash;过滤掉其他的输出日志，只记录error,以及以上级别的日志&ndash;&gt;-->
+        <!--<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+            <!--<level>-->
+                <!--ERROR-->
+            <!--</level>-->
+
+        <!--</filter>-->
+        <!--<encode>-->
+            <!--<pattern>-->
+                <!--%msg%n-->
+            <!--</pattern>-->
+            <!--&lt;!&ndash;滚动策略&ndash;&gt;-->
+            <!--&lt;!&ndash;每天一个日志&ndash;&gt;-->
+            <!--<rollongPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+                <!--&lt;!&ndash;路径&ndash;&gt;-->
+                <!--<fileNamePattern>-->
+                    <!--/var/log/tomcat/sell/error.%d.log-->
+                <!--</fileNamePattern>-->
+            <!--</rollongPolicy>-->
+        <!--</encode>-->
+    <!--</appender>-->
+
+
+    <!--<root level="info">-->
+        <!--<appender-ref ref="consolelog" />-->
+        <!--&lt;!&ndash;<appender-ref ref="fileInfoLog" />&ndash;&gt;-->
+    <!--</root>-->
+<!--</configuration>-->

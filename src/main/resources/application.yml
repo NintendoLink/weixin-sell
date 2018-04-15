@@ -8,3 +8,14 @@ spring:
     show-sql: true
 server:
   context-path: /sell
+#logging:
+#  pattern:
+##    日志输出格式
+#    console: "%d -%msg%n"
+#
+##  日志输出路径
+#  path: /var/log/tomcat
+##  文件名称，与日志输出路径只需要一个
+#  file: /var/log/tomcat/sell/
+##  可以指定某个类的Debug
+#  level: debug

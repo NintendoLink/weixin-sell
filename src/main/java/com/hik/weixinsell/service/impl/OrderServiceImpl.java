@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -220,4 +221,22 @@ public class OrderServiceImpl implements OrderService {
         }
         return orderDTO;
     }
+
+    /**
+     * 查询所有的订单
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<OrderDTO> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasterPage=orderMasterRepository.findAll(pageable);
+
+        List<OrderDTO>orderDTOList=OrderMaster2OrderDTOConverter.converter(orderMasterPage.getContent());
+
+        Page<OrderDTO> orderDTOPage=new PageImpl<OrderDTO>(orderDTOList,pageable,orderMasterPage.getTotalElements());
+
+        return orderDTOPage;
+    }
 }
+
+
